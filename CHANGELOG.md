@@ -4,6 +4,7 @@
   * Update development dependency `activerecord 4.0 => 5.2`
     Removed unused test suite gemfiles.
   * Update development dependency `elasticsearch 2.0 => 5.6`
+  * Correct deprecation warning for Elasticsearch 5.6: empty query for`_delete_by_query`
 
 # Version 5.1.0
 
