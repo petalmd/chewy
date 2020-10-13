@@ -3,6 +3,7 @@
   * Update development dependency `rspec 3.7.0 => 3.9.0`
   * Update development dependency `activerecord 4.0 => 5.2`
     Removed unused test suite gemfiles.
+  * Update development dependency `elasticsearch 2.0 => 5.6`
 
 # Version 5.1.0
 
