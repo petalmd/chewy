@@ -74,16 +74,16 @@ describe Chewy::Search::Parameters do
     let(:second) { described_class.new(limit: 20, offset: 20, order: 'bar') }
 
     specify do
-      expect { first.merge!(second) }.to change { first.clone }
-        .to(described_class.new(limit: 20, offset: 20, order: %w[foo bar]))
+      expect { first.merge!(second) }.to change { first.storages.map { |key, params| [key, params.value] }.to_h }
+        .to(limit: 20, offset: 20, :order=>{"bar"=>nil, "foo"=>nil})
     end
-    specify { expect { first.merge!(second) }.not_to change { second.clone } }
+    specify { expect { first.merge!(second) }.not_to change { second } }
 
     specify do
-      expect { second.merge!(first) }.to change { second.clone }
-        .to(described_class.new(limit: 20, offset: 10, order: %w[bar foo]))
+      expect { second.merge!(first) }.to change { second.storages.map { |key, params| [key, params.value] }.to_h }
+        .to(limit: 20, offset: 10, :order=>{"bar"=>nil, "foo"=>nil})
     end
-    specify { expect { second.merge!(first) }.not_to change { first.clone } }
+    specify { expect { second.merge!(first) }.not_to change { first } }
 
     context 'spawns new storages for the merge' do
       let(:names) { %i[limit offset order] }

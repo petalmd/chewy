@@ -1,5 +1,7 @@
 # master
 
+  * Update development dependency `rspec 3.7.0 => 3.9.0`
+
 # Version 5.1.0
 
 ## Breaking changes
