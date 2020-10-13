@@ -11,11 +11,11 @@ describe Chewy::Fields::Base do
     specify { expect(field.compose(double(value: %w[hello world]))).to eq(name: %w[hello world]) }
 
     specify { expect(described_class.new(:name, value: :last_name).compose(double(last_name: 'hello'))).to eq(name: 'hello') }
-    specify { expect(described_class.new(:name, value: :last_name).compose('last_name' => 'hello')).to eq(name: 'hello') }
+    specify { expect(described_class.new(:name, value: :last_name).compose({'last_name' => 'hello'})).to eq(name: 'hello') }
     specify { expect(described_class.new(:name).compose(double(name: 'hello'))).to eq(name: 'hello') }
-    specify { expect(described_class.new(:false_value).compose(false_value: false)).to eq(false_value: false) }
-    specify { expect(described_class.new(:true_value).compose(true_value: true)).to eq(true_value: true) }
-    specify { expect(described_class.new(:nil_value).compose(nil_value: nil)).to eq(nil_value: nil) }
+    specify { expect(described_class.new(:false_value).compose({false_value: false})).to eq(false_value: false) }
+    specify { expect(described_class.new(:true_value).compose({true_value: true})).to eq(true_value: true) }
+    specify { expect(described_class.new(:nil_value).compose({nil_value: nil})).to eq(nil_value: nil) }
 
     context 'nested fields' do
       before do
@@ -182,35 +182,35 @@ describe Chewy::Fields::Base do
 
       specify do
         expect(EventsIndex::Event.root.compose(
-                 id: 1, category: {id: 2, licenses: {id: 3, name: 'Name'}}
+          {id: 1, category: {id: 2, licenses: {id: 3, name: 'Name'}}}
         )).to eq('id' => 1, 'category' => {'id' => 2, 'licenses' => {'id' => 3, 'name' => 'Name'}})
       end
 
       specify do
-        expect(EventsIndex::Event.root.compose(id: 1, category: [
+        expect(EventsIndex::Event.root.compose({id: 1, category: [
           {id: 2, 'licenses' => {id: 3, name: 'Name1'}},
           {id: 4, licenses: nil}
-        ])).to eq('id' => 1, 'category' => [
+        ]})).to eq('id' => 1, 'category' => [
           {'id' => 2, 'licenses' => {'id' => 3, 'name' => 'Name1'}},
           {'id' => 4, 'licenses' => nil.as_json}
         ])
       end
 
       specify do
-        expect(EventsIndex::Event.root.compose('id' => 1, category: {id: 2, licenses: [
+        expect(EventsIndex::Event.root.compose({'id' => 1, category: {id: 2, licenses: [
           {id: 3, name: 'Name1'}, {id: 4, name: 'Name2'}
-        ]})).to eq('id' => 1, 'category' => {'id' => 2, 'licenses' => [
+        ]}})).to eq('id' => 1, 'category' => {'id' => 2, 'licenses' => [
           {'id' => 3, 'name' => 'Name1'}, {'id' => 4, 'name' => 'Name2'}
         ]})
       end
 
       specify do
-        expect(EventsIndex::Event.root.compose(id: 1, category: [
+        expect(EventsIndex::Event.root.compose({id: 1, category: [
           {id: 2, licenses: [
             {id: 3, 'name' => 'Name1'}, {id: 4, name: 'Name2'}
           ]},
           {id: 5, licenses: []}
-        ])).to eq('id' => 1, 'category' => [
+        ]})).to eq('id' => 1, 'category' => [
           {'id' => 2, 'licenses' => [
             {'id' => 3, 'name' => 'Name1'}, {'id' => 4, 'name' => 'Name2'}
           ]},

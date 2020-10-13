@@ -269,7 +269,7 @@ module Chewy
 
       def build_index_name(*args)
         ActiveSupport::Deprecation.warn '`Chewy::Index.build_index_name` is deprecated and will be removed soon, use `Chewy::Index.index_name` instead'
-        index_name(args.extract_options!)
+        index_name(**args.extract_options!)
       end
     end
   end

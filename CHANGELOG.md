@@ -5,6 +5,7 @@
     Removed unused test suite gemfiles.
   * Update development dependency `elasticsearch 2.0 => 5.6`
   * Correct deprecation warning for Elasticsearch 5.6: empty query for`_delete_by_query`
+  * Corrections Ruby 2.7 deprecation warning in specs.
 
 # Version 5.1.0
 
