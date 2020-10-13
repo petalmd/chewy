@@ -138,7 +138,7 @@ jobs:
           <<: *es56-env
     working_directory: ~/repo
     environment:
-      GEMFILE: gemfiles/rails.5.1.mongoid.6.3.gemfile
+      GEMFILE: gemfiles/rails.5.2.mongoid.6.4.gemfile
     steps:
       - rspec-test
 
@@ -175,7 +175,7 @@ jobs:
           <<: *es56-env
     working_directory: ~/repo
     environment:
-      GEMFILE: gemfiles/rails.5.1.mongoid.6.3.gemfile
+      GEMFILE: gemfiles/rails.5.2.mongoid.6.4.gemfile
     steps:
       - rspec-test
 
@@ -212,6 +212,6 @@ jobs:
           <<: *es56-env
     working_directory: ~/repo
     environment:
-      GEMFILE: gemfiles/rails.5.1.mongoid.6.3.gemfile
+      GEMFILE: gemfiles/rails.5.2.mongoid.6.4.gemfile
     steps:
       - rspec-test
