@@ -1,11 +1,6 @@
 # master
 
-  * Update development dependency `rspec 3.7.0 => 3.9.0`
-  * Update development dependency `activerecord 4.0 => 5.2`
-    Removed unused test suite gemfiles.
-  * Update development dependency `elasticsearch 2.0 => 5.6`
-  * Correct deprecation warning for Elasticsearch 5.6: empty query for`_delete_by_query`
-  * Corrections Ruby 2.7 deprecation warning in specs.
+  * Update development dependencies, CI Ruby, Rails version, fix Ruby 2.7 deprecation warnings.
 
 # Version 5.1.0
 
