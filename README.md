@@ -1,10 +1,7 @@
 [![Gem Version](https://badge.fury.io/rb/chewy.svg)](http://badge.fury.io/rb/chewy)
-[![Build Status](https://travis-ci.org/toptal/chewy.svg)](https://travis-ci.org/toptal/chewy)
+[![CircleCI](https://circleci.com/gh/toptal/chewy/tree/master.svg?style=svg)](https://circleci.com/gh/toptal/chewy/tree/master)
 [![Code Climate](https://codeclimate.com/github/toptal/chewy.svg)](https://codeclimate.com/github/toptal/chewy)
 [![Inline docs](http://inch-ci.org/github/toptal/chewy.svg?branch=master)](http://inch-ci.org/github/toptal/chewy)
-
-<p align="right">Sponsored by</p>
-<p align="right"><a href="https://www.toptal.com/"><img src="https://www.toptal.com/assets/public/blocks/logo/big.png" alt="Toptal" width="105" height="34"></a></p>
 
 # Chewy
 
@@ -131,19 +128,22 @@ See [config.rb](lib/chewy/config.rb) for more details.
 
 #### Aws Elastic Search
 If you would like to use AWS's ElasticSearch using an IAM user policy, you will need to sign your requests for the `es:*` action by injecting the appropriate headers passing a proc to `transport_options`.
+You'll need an additional gem for Faraday middleware: add `gem 'faraday_middleware-aws-sigv4'` to your Gemfile.
 
 ```ruby
- Chewy.settings = {
+  require 'faraday_middleware/aws_sigv4'
+
+  Chewy.settings = {
     host: 'http://my-es-instance-on-aws.us-east-1.es.amazonaws.com:80',
+    port: 80, # 443 for https host
     transport_options: {
       headers: { content_type: 'application/json' },
       proc: -> (f) do
-          f.request :aws_signers_v4,
-                    service_name: 'es',
+          f.request :aws_sigv4,
+                    service: 'es',
                     region: 'us-east-1',
-                    credentials: Aws::Credentials.new(
-                      ENV['AWS_ACCESS_KEY'],
-                      ENV['AWS_SECRET_ACCESS_KEY'])
+                    access_key_id: ENV['AWS_ACCESS_KEY'],
+                    secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
       end
     }
   }
@@ -1113,3 +1113,8 @@ Use the following Rake tasks to control the Elasticsearch cluster while developi
 rake elasticsearch:start # start Elasticsearch cluster on 9250 port for tests
 rake elasticsearch:stop # stop Elasticsearch
 ```
+
+## Copyright
+
+Copyright (c) 2013-2021 Toptal, LLC. See [LICENSE.txt](LICENSE.txt) for
+further details.
